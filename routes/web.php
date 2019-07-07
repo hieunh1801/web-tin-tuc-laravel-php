@@ -14,3 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/checkdatabase', function() {
+    $theloai = App\TheLoai::All();
+    foreach($theloai as $value) {
+        echo $value;
+    }
+});
+
+Route::get('/checkpage', function () {
+    return view('admin.theloai.danhsach');
+});
