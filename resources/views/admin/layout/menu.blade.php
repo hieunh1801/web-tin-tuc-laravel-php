@@ -16,13 +16,37 @@
                 <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Category<span class="fa arrow"></span></a>
+                <a href="admin/theloai/danhsach"><i class="fa fa-bar-chart-o fa-fw"></i>Thể loại<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#">List Category</a>
+                        <a href="admin/theloai/danhsach">Danh sách thể loại</a>
                     </li>
                     <li>
-                        <a href="#">Add Category</a>
+                        <a href="admin/theloai/them">Thêm thể loại</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="admin/loaitin/danhsach"><i class="fa fa-ambulance fa-fw"></i>Loại tin<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="admin/loaitin/danhsach">Danh sách loại tin</a>
+                    </li>
+                    <li>
+                        <a href="admin/loaitin/them">Thêm thể loại tin</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="admin/tintuc/danhsach"><i class="fa fa-newspaper-o fa-fw"></i>Tin tức<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="admin/tintuc/danhsach">Danh sách tin tức</a>
+                    </li>
+                    <li>
+                        <a href="admin/tintuc/them">Thêm tin mới</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

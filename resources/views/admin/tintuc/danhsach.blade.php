@@ -6,8 +6,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Category
-                    <small>List</small>
+                <h1 class="page-header">Tin tức
+                    <small>Danh sách</small>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -15,30 +15,43 @@
                 <thead>
                     <tr align="center">
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Category Parent</th>
-                        <th>Status</th>
+                        <th>Tiêu đề</th>
+                        <th>Tiêu đề không dấu</th>
+                        <th>Tóm tắt</th>
+                        {{-- <th>Nội dung</th> --}}
+                        <th>Nổi bật</th>
+                        <th>Số lượt xem</th>
+                        <th>Loại tin</th>
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($tintuc as $item)
                     <tr class="odd gradeX" align="center">
-                        <td>1</td>
-                        <td>Tin Tức</td>
-                        <td>None</td>
-                        <td>Hiện</td>
+                        <td>{{$item->id}}</td>
+                        <td>
+                            {{$item->TieuDe}}<br>
+                            <img width="100px" src="upload/tintuc/{{$item->Hinh}}" alt="{{$item->TieuDe}}">
+                        </td>
+                        <td>{{$item->TieuDeKhongDau}}</td>
+                        <td>{{$item->TomTat}}</td>
+                        {{-- <td>{{$item->NoiDung}}</td> --}}
+                        <td> 
+                            @if ($item->NoiBat == 0)
+                            {{'Không'}}
+                            @else   
+                            {{'Có'}}
+                            @endif
+                        </td>
+                        <td>{{$item->SoLuotXem}}</td>
+                        <td>{{$item->loaitin->Ten}}</td>
                         <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
                         <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
                     </tr>
-                    <tr class="even gradeC" align="center">
-                        <td>2</td>
-                        <td>Bóng Đá</td>
-                        <td>Thể Thao</td>
-                        <td>Ẩn</td>
-                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
-                    </tr>
+                    @endforeach
+                   
+                    
                 </tbody>
             </table>
         </div>

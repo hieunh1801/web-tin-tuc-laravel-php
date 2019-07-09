@@ -5,11 +5,13 @@
 
 Tài liệu download =>> File laravelDemo.rar
 
-| Command line                      | Description                  |
-| :-------------------------------- | :--------------------------- |
-| laravel new blog                  | create project laravel blog  |
-| php artisan serve                 | run sever php                |
-| php artisan make:model model_name | create model call model_name |
+| Command line                                  | Description                         |
+|:----------------------------------------------|:------------------------------------|
+| laravel new blog                              | create project laravel blog         |
+| php artisan serve                             | run sever php                       |
+| php artisan make:model TheLoai                | create model call TheLoai           |
+| php artisan make:controller TheLoaiController | create model call TheLoaiController |
+|                                               |                                     |
 
 ## Step 1: Create Database and Config file
 1.1 Create database on phpMyAdmin http://localhost/phpmyadmin/
@@ -64,3 +66,11 @@ foreach($theloai as $value) {
 
 ## Step 3: Create admin view
 - extend and include
+
+## Step 4: Create route
+- Create route group
+- Create controller to redirect view
+- Create <base> in __admin/layout/index.blade.php__ to fix error css
+
+## Thiếu hụt
+- Chưa xử lý xóa thể loại => Có một trường là active để biết còn thể loại đó không
