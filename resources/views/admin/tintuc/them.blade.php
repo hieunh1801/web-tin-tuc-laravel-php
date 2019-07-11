@@ -1,6 +1,18 @@
- @extends('admin.layout.index')
- @section('content')
-    <!-- Page Content -->
+@extends('admin.layout.index')
+@section('content')
+{{-- Style --}}
+<style>
+    .class1 {
+        padding: 0px 15px;
+    }
+
+    .class2 {
+        margin: 0px 30px;
+    }
+</style>
+
+
+<!-- Page Content -->
  <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row">
@@ -11,7 +23,28 @@
             </div>
             <!-- /.col-lg-12 -->
             <div class="col-lg-12" style="padding-bottom:120px">
-                <form action="" method="POST">
+                {{-- Hiện thông báo lỗi --}}
+                @if(count($errors) > 0)
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        {{$error}} <br>
+                    @endforeach
+                </div>
+                @endif
+
+                {{-- Hiện thông báo thành công --}}
+                @if(session('thongbao'))
+                    <div class="alert alert-success">{{session('thongbao')}}</div>
+                @endif
+                @if(session('loi'))
+                    <div class="alert alert-danger">{{session('loi')}}</div>
+                @endif
+                {{-- Thêm encript để gửi file --}}
+                <form action="admin/tintuc/them" method="POST" enctype="multipart/form-data">
+                    {{-- Thêm token để gửi tới server --}}
+                    <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+
+                    {{-- Lựa chọn thể loại tin --}}
                     <div class="form-group">
                         <label>Thể loại</label>
                         <select class="form-control" name="idTheLoai" id="TheLoai">
@@ -20,29 +53,53 @@
                             @endforeach
                         </select>
                     </div>
+
+                    {{-- Lựa chọn loại tin --}}
                     <div class="form-group">
-                            <label>Loại tin</label>
-                            <select class="form-control" name="idLoaiTin" id="LoaiTin">
-                                @foreach ($loaitin as $item)
-                                <option value="{{$item->id}}">{{$item->Ten}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <label>Loại tin</label>
+                        <select class="form-control" name="idLoaiTin" id="LoaiTin">
+                            @foreach ($loaitin as $item)
+                            <option value="{{$item->id}}">{{$item->Ten}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Nhập tiêu đề --}}
                     <div class="form-group">
                         <label>Tiêu đề</label>
                         <input class="form-control" name="TieuDe" placeholder="Nhập tiêu đề" />
                     </div>
                    
+                    {{-- Nhập tóm tắt --}}
                     <div class="form-group">
                         <label>Tóm tắt</label>
-                        <textarea class="form-control" name="TomTat" placeholder="Nhập tóm tắt" rows="3"></textarea>
+                        <textarea id="editorShortDescription" name="TomTat" value="something" placeholder="something"></textarea>
                     </div>
                    
+                    {{-- Nhập nội dung --}}
                     <div class="form-group">
                         <label>Nội dung</label>
-                        <div id="toolbar-container"></div>
-                        <div id="editor" style="height: 500px; border-width: 1px; border-style: solid"></textarea>
+                        <textarea id="editorContent" name="NoiDung"></textarea>
                     </div>
+
+                    {{-- Lựa chọn nổi bật Có/Không --}}
+                    <div class="form-group">
+                        <label>Nổi bật</label>
+                        <label class="radio-inline">
+                            <input name="NoiBat" value="0" checked="" type="radio">Không
+                        </label>
+                        <label class="radio-inline">
+                            <input name="NoiBat" value="1" type="radio">Có
+                        </label>
+                    </div>
+
+                    {{-- Chọn file ảnh gửi lên --}}
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Chọn file ảnh tải lên</label>
+                        <input type="file" name="fileAnh" id="exampleFormControlFile1">
+                    </div>
+
+                    {{-- Thêm mới tin tức --}}
                     <button type="submit" class="btn btn-default">Thêm tin tức</button>
                     <button type="reset" class="btn btn-default">Làm mới</button>
                 <form>
@@ -55,45 +112,27 @@
 <!-- /#page-wrapper --> 
 @endsection
 @section('script')
-{{-- <script type="text/javascript" language="javascript" src="admin_assets/ckeditor5-build-decoupled-document/ckeditor.js" ></script> --}}
-{{-- <script type="text/javascript" language="javascript" src="admin_assets/ckeditor5-build-classic/ckeditor.js" ></script> --}}
-{{-- <script type="text/javascript" language="javascript" src="admin_assets/ckeditor/ckeditor.js" ></script> --}}
+<script src="admin_assets/froalaEditor/js/froala_editor.pkgd.min.js"></script>
+<link href="admin_assets/froalaEditor/css/froala_editor.pkgd.min.css" rel="stylesheet">
 <script>
 
     $(document).ready(function() {
-        /*
-             DecoupledEditor
-        */
-        DecoupledEditor.create( document.querySelector( '#editor' ))
-        .then( editor => {
-            const toolbarContainer = document.querySelector( '#toolbar-container' );
-            toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-        } )
-        .catch( err => {
-            console.error( err.stack );
-        } );
-        
-        /*
-            Editor Clasical
-        */
-        // ClassicEditor.create( document.querySelector( '#editor' ), {
-        //     toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
-        //     heading: {
-        //         options: [
-        //             { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-        //             { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-        //             { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
-        //         ]
-        //     }
-        // } )
-        // .catch( error => {
-        //     console.log( error );
-        // } );
-
-
-        ////////////////
-        //////////////// Call Ajax khi thay đổi thể loại => load lại danh sách loại tin
-        ////////////////
+        // Generate FroalaEditor
+        var editor1 = new FroalaEditor('#editorContent', 
+        {
+            heightMin: 200,
+        }
+        );
+        var editor2 = new FroalaEditor('#editorShortDescription',
+        {
+            heightMin: 200,
+            imageStyles: {
+                class1: 'Class 1',
+                class2: 'Class 2'
+            },
+        }
+        );
+        // Call Ajax when choosing TheLoai
         $("#TheLoai").change(function() {
             var idTheLoai =$(this).val();
             console.log('Select theloai id =', idTheLoai);

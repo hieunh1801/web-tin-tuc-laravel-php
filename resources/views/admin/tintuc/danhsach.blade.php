@@ -18,7 +18,7 @@
                         <th>Tiêu đề</th>
                         <th>Tiêu đề không dấu</th>
                         <th>Tóm tắt</th>
-                        {{-- <th>Nội dung</th> --}}
+                        <th>Nội dung</th>
                         <th>Nổi bật</th>
                         <th>Số lượt xem</th>
                         <th>Loại tin</th>
@@ -36,7 +36,7 @@
                         </td>
                         <td>{{$item->TieuDeKhongDau}}</td>
                         <td>{{$item->TomTat}}</td>
-                        {{-- <td>{{$item->NoiDung}}</td> --}}
+                        <td>{{$item->NoiDung}}</td>
                         <td> 
                             @if ($item->NoiBat == 0)
                             {{'Không'}}

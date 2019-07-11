@@ -10,6 +10,7 @@
     <base href="{{asset('')}}" >
     <!-- Bootstrap Core CSS -->
     <link href="admin_assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="admin_assets/bootstrap-flatly-theme.min.css" rel="stylesheet"> --}}
 
     <!-- MetisMenu CSS -->
     <link href="admin_assets/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
@@ -25,6 +26,8 @@
 
     <!-- DataTables Responsive CSS -->
     <link href="admin_assets/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+
+    
 </head>
 
 <body>
