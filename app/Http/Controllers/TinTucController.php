@@ -82,21 +82,62 @@ class TinTucController extends Controller
     public function getSua($id)
     {
         $tintuc = TinTuc::Find($id);
-        return view('admin.tintuc.sua', ['tintuc' => $tintuc]);
+        $theloai = TheLoai::All();
+        $loaitin = LoaiTin::All();
+        return view('admin.tintuc.sua', ['tintuc' => $tintuc, 'theloai' => $theloai, 'loaitin' => $loaitin]);
 
     }
     public function postSua(Request $request, $id)
     {
         $tintuc = TinTuc::Find($id);
+        
         $this->validate($request, 
-        ['Ten' => 'required|min:3|max:100'],
         [
-            'Ten.required' => 'Không được để trống',
-            'Ten.min' => 'Tên thể loại phải có độ dài từ 3 tới 100 kí tự',
-            'Ten.max' => 'Tên thể loại phải có độ dài từ 3 tới 100 kí tự',
+            'idLoaiTin' => 'required',
+            // Yêu cầu phải có, min = 3, không trùng trong bảng TinTuc->cột tiêu để
+            'TieuDe' => 'required|min:3', 
+            'TomTat' => 'required',
+            'NoiDung' => 'required',
+            'NoiBat' => 'required',
+        ],
+        [
+            'idLoaiTin.required' => 'Bạn chưa chọn loại tin',
+            'TieuDe.required' => 'Bạn chưa nhập tiêu đề',
+            'TieuDe.min' => 'Độ dài tiêu đề >= 3 kí tự',
+            'TomTat.required' => 'Yêu cầu nhập tóm tắt',
+            'NoiDung.required' => 'Yêu cầu nhập nội dung',
+            'NoiBat.required' => 'Yêu cầu chọn nổi bật',
+        
         ]);
-        $tintuc->Ten = $request->Ten;
-        $tintuc->TenKhongDau = changeTitle($request->Ten);
+        $tintuc = TinTuc::Find($id);
+        $tintuc->TieuDe = $request->TieuDe;
+        $tintuc->TieuDeKhongDau = changeTitle($request->TieuDe);
+        $tintuc->TomTat = $request->TomTat;
+        $tintuc->idLoaiTin = $request->idLoaiTin;
+        $tintuc->NoiDung = $request->NoiDung;
+        $tintuc->NoiBat = $request->NoiBat;
+        
+        // Kiểm tra xem có upload hình lên không
+        if($request->hasFile('fileAnh')){
+            $file = $request->file('fileAnh');
+            $duoi = $file->getClientOriginalExtension();
+            if($duoi != "jpg" && $duoi != "png" && $duoi != "jpeg")
+            {
+                // return redirect('admin/tintuc/them')->with('loi', 'Chỉ được chọn file jpg, png, jpeg'); 
+                return redirect()->back()->with('loi', 'Chỉ được chọn file jpg, png, jpeg');
+            }
+
+            $name = $file->getClientOriginalName();
+            $tenhinh = str_random()."_".$name;
+            while(file_exists("upload/tintuc/".$tenhinh)) {
+                $tenhinh = str_random()."_".$name;
+            }
+            $file->move("upload/tintuc",$tenhinh);
+            unlink("upload/tintuc/".$tintuc->Hinh);
+            $tintuc->Hinh = $tenhinh;
+        } else {
+            $tintuc->Hinh = "";
+        }
         $tintuc->save();
         return redirect('admin/tintuc/sua/'.$id)->with('thongbao', 'Sửa thành công');
 

@@ -25,8 +25,16 @@ Route::get('/checkpage', function () {
     return view('admin.theloai.danhsach');
 });
 
-Route::group(['prefix' => 'admin'], function () {
-    // the loai
+Route::get('admin/dangnhap', 'UserController@getDangNhapAdmin');
+Route::post('admin/dangnhap', 'UserController@postDangNhapAdmin');
+Route::get('admin/logout', 'UserController@getDangXuat');
+
+
+Route::group(['prefix' => 'admin', 'middleware' => ['adminLogin', 'preventBackHistory']], function () 
+{
+    /////////////////
+    // Group The Loai
+    /////////////////
     Route::group(['prefix' => 'theloai'], function () {
         Route::get('danhsach', 'TheLoaiController@getDanhSach');
 
@@ -38,6 +46,10 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('xoa/{id}', 'TheLoaiController@getXoa');
     });
+
+    /////////////////
+    // Group Loai tin
+    /////////////////
     Route::group(['prefix' => 'loaitin'], function () {
         Route::get('danhsach', 'LoaiTinController@getDanhSach');
 
@@ -50,6 +62,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('xoa/{id}', 'LoaiTinController@getXoa');
     });
 
+    /////////////////
+    // Group Tintuc
+    /////////////////
     Route::group(['prefix' => 'tintuc'], function () {
         Route::get('danhsach', 'TinTucController@getDanhSach');
 
@@ -60,6 +75,21 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('them', 'TinTucController@postThem');
 
         Route::get('xoa/{id}', 'TinTucController@getXoa');
+    });
+
+    /////////////////
+    // Group User
+    /////////////////
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('danhsach', 'UserController@getDanhSach');
+
+        Route::get('sua/{id}', 'UserController@getSua');
+        Route::post('sua/{id}', 'UserController@postSua');
+
+        Route::get('them', 'UserController@getThem');
+        Route::post('them', 'UserController@postThem');
+
+        Route::get('xoa/{id}', 'UserController@getXoa');
     });
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('loaitin/{idTheLoai}', 'AjaxController@getLoaiTin');

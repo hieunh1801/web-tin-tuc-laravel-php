@@ -46,8 +46,8 @@
                         </td>
                         <td>{{$item->SoLuotXem}}</td>
                         <td>{{$item->loaitin->Ten}}</td>
-                        <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
-                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
+                        <td class="center"><i class="fa fa-trash-o fa-fw"></i><a href="admin/tintuc/xoa/{{$item->id}}"> Delete</a></td>
+                        <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="admin/tintuc/sua/{{$item->id}}">Edit</a></td>
                     </tr>
                     @endforeach
                    

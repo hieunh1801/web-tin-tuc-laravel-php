@@ -11,7 +11,7 @@ Tài liệu download =>> File laravelDemo.rar
 | php artisan serve                             | run sever php                       |
 | php artisan make:model TheLoai                | create model call TheLoai           |
 | php artisan make:controller TheLoaiController | create model call TheLoaiController |
-|                                               |                                     |
+| php artisan make:request UserStoreRequest     | tạo model xử lý form validation     |
 
 ## Step 1: Create Database and Config file
 1.1 Create database on phpMyAdmin http://localhost/phpmyadmin/
@@ -74,3 +74,6 @@ foreach($theloai as $value) {
 
 ## Thiếu hụt
 - Chưa xử lý xóa thể loại => Có một trường là active để biết còn thể loại đó không
+
+## Xử lý tốt nhất: Phần User
+- Form handling
